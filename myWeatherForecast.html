@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="myWeatherForecast.css">
+    <title>5 Day Weather Forecast</title>
+    <link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet'>
+</head>
+
+<body onload="DefaultScreen()">
+    
+    <h1 id="theWebHeader">Weather Forecast</h1>
+    <p id="inputContainer">City: 
+        <input type="text" id="cityInput" placeholder="Search a City.."></p>
+    <div class="button-container">
+        <button type="button" onclick="GetInfo()" class="animated-button">
+            <span>Search...</span>
+        </button>
+    </div> 
+    <h2 id="cityName">---Sapporo---</h2>
+
+    <div class="current-container">
+        <p id="currentTime">Time: Searching....</p>
+        <p id="currentTemperature">Current Temperature: Searching....</p>
+        <p id="feels_like">Feels like: Searching.....</p>       
+        <p id="humidity">Humidity: Searching....</p>
+        <p id="pressure">Pressure: Searching....</p>
+        <p id="windVelocity">Wind Speed: Searching....</p>
+        <p id="sunrise">Sunrise: Searching....</p>
+        <p id="sunset">Sunset: Searching....</p>
+    </div>
+    
+
+    <div id="weatherContainer">
+        <div id="todayWeatherContainer">
+            <div class="weather-wrapper" id="day1Weather">
+                <p class="weather-day" id="day1"></p>
+                <div class="image">
+                    <img src="" class="imgClass" id="img1"></div>
+                <p class="maxTempurture" id="the1Maximum">Searching....</p>
+                <p class="minTempurture" id="the1Minimum">Searching....</p>
+                <!-- <div class="weatherData">
+                    <div id="weatherDetails" class="hide">
+                        <p id="details"></p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+            <div id="weatherDetailsContainer" class="hide">
+                <div id="weatherDetails">
+                    <p id="details"></p>
+                </div>
+            </div>
+
+
+        <div id="forecastContainer">
+            <div class="weather-wrapper" id="day2Weather">
+                <p class="weather-day" id="day2"></p>
+                <div class="image">
+                    <img src="" class="imgClass" id="img2"></div>
+                <p class="maxTempurture" id="the2Maximum">Searching....</p>
+                <p class="minTempurture" id="the2Minimum">Searching....</p>
+            </div>
+            <div class="weather-wrapper" id="day3Weather">
+                <p class="weather-day" id="day3"></p>
+                <div class="image">
+                    <img src="" class="imgClass" id="img3"></div>
+                <p class="maxTempurture" id="the3Maximum">Searching....</p>
+                <p class="minTempurture" id="the3Minimum">Searching....</p>
+            </div>
+            <div class="weather-wrapper" id="day4Weather">
+                <p class="weather-day" id="day4"></p>
+                <div class="image">
+                    <img src="" class="imgClass" id="img4"></div>
+                <p class="maxTempurture" id="the4Maximum">Searching....</p>
+                <p class="minTempurture" id="the4Minimum">Searching....</p>
+            </div>
+            <div class="weather-wrapper" id="day5Weather">
+                <p class="weather-day" id="day5"></p>
+                <div class="image">
+                    <img src="" class="imgClass" id="img5"></div>
+                <p class="maxTempurture" id="the5Maximum">Searching....</p>
+                <p class="minTempurture" id="the5Minimum">Searching....</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="weatherDetailsContainer">
+        <!-- <div id="fixedWeatherDetails"> -->
+            <div id="weatherDetails"></div>  
+        <!-- </div> -->
+    </div>
+
+    <script src="myWeatherForecast.js"></script>
+
+</body>
+
+</html>
