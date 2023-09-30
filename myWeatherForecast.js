@@ -1,24 +1,24 @@
 // broken clouds mean they are very cloudy
 
 const iconMappings = {
-    "01d": { icon: "weatherimages/01d.png", description: "clear sky" },
-    "01n": { icon: "weatherimages/01n.png", description: "clear night" },
-    "02d": { icon: "weatherimages/02d.png", description: "few clouds" },
-    "02n": { icon: "weatherimages/02n.png", description: "few clouds at night" },
-    "03d": { icon: "weatherimages/03d.png", description: "scattered clouds" },
-    "03n": { icon: "weatherimages/03n.png", description: "scattered clouds at night" },
-    "04d": { icon: "weatherimages/04d.png", description: "broken clouds" },
-    "04n": { icon: "weatherimages/04n.png", description: "broken clouds at night" },
-    "09d": { icon: "weatherimages/09d.png", description: "shower rain" },
-    "09n": { icon: "weatherimages/09n.png", description: "shower rain at night" },
-    "10d": { icon: "weatherimages/10d.png", description: "rain" },
-    "10n": { icon: "weatherimages/10n.png", description: "rain at night" },
-    "11d": { icon: "weatherimages/11d.png", description: "thunderstorm" },
-    "11n": { icon: "weatherimages/11n.png", description: "thunderstorm at night" },
-    "13d": { icon: "weatherimages/13d.png", description: "snow" },
-    "13n": { icon: "weatherimages/13n.png", description: "snow at night" },
-    "50d": { icon: "weatherimages/50d.png", description: "mist" },
-    "50n": { icon: "weatherimages/50n.png", description: "mist at night" },
+    "01d": { icon: "01d.png", description: "clear sky" },
+    "01n": { icon: "01n.png", description: "clear night" },
+    "02d": { icon: "02d.png", description: "few clouds" },
+    "02n": { icon: "02n.png", description: "few clouds at night" },
+    "03d": { icon: "03d.png", description: "scattered clouds" },
+    "03n": { icon: "03n.png", description: "scattered clouds at night" },
+    "04d": { icon: "04d.png", description: "broken clouds" },
+    "04n": { icon: "04n.png", description: "broken clouds at night" },
+    "09d": { icon: "09d.png", description: "shower rain" },
+    "09n": { icon: "09n.png", description: "shower rain at night" },
+    "10d": { icon: "10d.png", description: "rain" },
+    "10n": { icon: "10n.png", description: "rain at night" },
+    "11d": { icon: "11d.png", description: "thunderstorm" },
+    "11n": { icon: "11n.png", description: "thunderstorm at night" },
+    "13d": { icon: "13d.png", description: "snow" },
+    "13n": { icon: "13n.png", description: "snow at night" },
+    "50d": { icon: "50d.png", description: "mist" },
+    "50n": { icon: "50n.png", description: "mist at night" },
 
     // Add more mappings for other conditions if needed
 };
@@ -225,8 +225,8 @@ function showWeatherDetails(dayIndex) {
 
 function hideWeatherDetails() {
     const detailsDiv = document.getElementById('weatherDetailsContainer');
-    if (detailsContainer) {
-        detailsContainer.classList.add('hide');
+    if (detailsDiv) {
+        detailsDiv.classList.add('hide');
     }
 }
 

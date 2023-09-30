@@ -1,36 +1,32 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #eafafa;
-    display: block;
-    max-width: 100%;   
-     
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f4f8; 
+  display: block;
+  max-width: 100%;
 }
-
 
 #container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
-
 
 #theWebHeader {
-    text-align: center;
-    color: #0a8888;
-    font-size: 90px;
-    padding: 10px;
-    background-color: #6fdcdc;
-    opacity: 0.4;
-    font-weight: bold;
+  text-align: center;
+  color: #007bff; 
+  font-size: 90px;
+  padding: 10px;
+  background-color: #e0f7fa; 
+  opacity: 0.8;
+  font-weight: bold;
 }
-
 
 
 #inputContainer {
