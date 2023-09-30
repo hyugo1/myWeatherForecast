@@ -2,7 +2,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #f0f4f8; 
+  /* background-color: #f0f4f8;  */
+  background-color: #e0f7fa; 
   display: block;
   max-width: 100%;
 }
@@ -49,14 +50,17 @@ body {
 
   
   .animated-button {
-    color: #FFF;
+    color: rgb(9, 7, 7);
     position: relative;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #4bdeff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     overflow: hidden; 
+    font-size: 1em;
+    font-family: 'Fira Sans', sans-serif;
+  
   }
   
   .animated-button span {
@@ -217,10 +221,10 @@ body {
     justify-content: space-around;
     width: 100%;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
     padding: 20px;
     border-radius: 4px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Fira sans', sans-serif;
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
 }
 
 #forecastContainer {
@@ -254,11 +258,11 @@ body {
 .current-container {
     /* background-color: rgba(255, 255, 255, 0.9); */
     /* background-color: #80e4fb; */
-    background-color: #f0f4f8;
+    background-color: #e0f7fa; 
     padding: 20px;
     border-radius: 4px;
     margin-top: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
 }
 
 #currentTemperature, #currentTime, #humidity, #pressure, #windVelocity, #sunrise, #sunset, #feels_like { 
@@ -281,6 +285,7 @@ body {
   min-width: 150px;
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  background-color: #d1eff6; 
 
 }
 
@@ -289,7 +294,7 @@ body {
   position: fixed;
   top: 5px;
   right: 5px;
-  background-color: white;
+  background-color: #f0f4f8;
   padding: 10px;
   border: 1px solid #ccc;
   z-index: 1000;
@@ -302,7 +307,7 @@ body {
   margin: 0 auto;
   padding: 10px;
   border-radius: 4px;
-  background-color: #b2c8ed; 
+  background-color: #f0f4f8;
 
   
 }
@@ -311,7 +316,8 @@ body {
 #details {
   font-size: 18px;
   /* background-color: rgba(41, 177, 180, 0.6); */
-  background-color: #b2c8ed; 
+  /* background-color: #b2c8ed;  */
+  background-color: #f0f4f8;
   font-weight: bold;  
   font-family: 'Alegreya', sans-serif;
 }
