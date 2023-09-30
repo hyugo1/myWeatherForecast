@@ -275,7 +275,7 @@ body {
 
 
 .weather-wrapper {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -286,6 +286,7 @@ body {
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   background-color: #d1eff6; 
+  border: 2px solid rgb(148, 231, 240);
 
 }
 
@@ -296,7 +297,7 @@ body {
   right: 5px;
   background-color: #f0f4f8;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid rgb(109, 231, 244);
   z-index: 1000;
 }
 
