@@ -253,7 +253,8 @@ body {
 
 .current-container {
     /* background-color: rgba(255, 255, 255, 0.9); */
-    background-color: #80e4fb;
+    /* background-color: #80e4fb; */
+    background-color: #f0f4f8;
     padding: 20px;
     border-radius: 4px;
     margin-top: 20px;
@@ -299,10 +300,9 @@ body {
   display: block;
   max-width: 400px;
   margin: 0 auto;
-  /* background-color: rgba(41, 177, 180, 0.5); */
-  background-color: #ccff99; 
   padding: 10px;
   border-radius: 4px;
+  background-color: #b2c8ed; 
 
   
 }
@@ -311,7 +311,7 @@ body {
 #details {
   font-size: 18px;
   /* background-color: rgba(41, 177, 180, 0.6); */
-  background-color: #ccff99;
+  background-color: #b2c8ed; 
   font-weight: bold;  
   font-family: 'Alegreya', sans-serif;
 }
