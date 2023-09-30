@@ -278,14 +278,6 @@ body {
 
 
 .weather-wrapper {
-  /* border: 1px solid #ccc;
-  display: flex;
-  flex-direction: row; 
-  align-items: center;
-  padding: 20px 30px;
-  margin-right: 10px; 
-  margin-bottom: 10px;
-  min-width: 150px;  */
   border: 1px solid #ccc;
   display: flex;
   flex-direction: column;
@@ -299,7 +291,7 @@ body {
 
 }
 
-/* Your existing CSS styles */
+/* weather Detailis Container */
 
 #weatherDetailsContainer {
   position: fixed;
