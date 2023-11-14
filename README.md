@@ -1,14 +1,14 @@
 This is a 5 day/3 hour weather forecast utilizing the OpenWeather API [here.](https://openweathermap.org)
 
 Key features include:
-・Search cities/locations worldwide
+- Search cities/locations worldwide
 
 ![Local Image](weatherPic3.png)
 
-・Ability to retrieve current weather details for various cities
+- Ability to retrieve current weather details for various cities
 ![Local Image](weatherPic2.png)
 
-Additionally, the forecast covers a 5-day/3-hour span. Hovering over the panel provides detailed the forecast.
+- Additionally, the forecast covers a 5-day/3-hour span. Hovering over the panel provides detailed the forecast.
 ![Local Image](weatherPic1.png)
 
 
