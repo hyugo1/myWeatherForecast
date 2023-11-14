@@ -2,17 +2,13 @@ This is a 5 day/3 hour weather forecast utilizing the OpenWeather API [here.](ht
 
 Key features include:
 - Search cities/locations worldwide
-
-![Local Image](weatherPic2.png)
-<img src="weatherPic2.png" alt="Picture of the current weather details in Tokyo" width="200"/>
+<img src="weatherPic2.png" alt="Picture of the current weather details in Tokyo" width="2000"/>
 
 - Ability to retrieve current weather details for various cities
-![Local Image](weatherPic3.png)
-<img src="weatherPic3.png" alt="Picture of the current weather details in Manchester" width="200"/>
+<img src="weatherPic3.png" alt="Picture of the current weather details in Manchester" width="2000"/>
 
 - Additionally, the forecast covers a 5-day/3-hour span. Hovering over the panel provides detailed the forecast.
-![Local Image](weatherPic1.png)
-<img src="weatherPic3.png" alt="5 day 3 hour forecast grid" width="200"/>
+<img src="weatherPic3.png" alt="5 day 3 hour forecast grid" width="2000"/>
 
 
 
