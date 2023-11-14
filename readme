@@ -1,4 +1,19 @@
-Based on the weather condition codes and the provided day and night icons, you will need a total of 22 different images to cover all the weather conditions:
+This is a 5 day/3 hour weather forecast utilizing the OpenWeather API [Link Text](https://openweathermap.org)
+
+Key features include:
+・Search cities/locations worldwide
+![Local Image](weatherPic3.png)
+
+・Ability to retrieve current weather details for various cities
+![Local Image](weatherPic2.png)
+
+Additionally, the forecast covers a 5-day/3-hour span. Hovering over the panel provides detailed the forecast.
+![Local Image](weatherPic1.png)
+
+
+
+
+For effective representation of various weather conditions based on codes and day/night distinctions, you'll need a set of 22 distinct images. These images should correspond to different weather conditions:
 
 11d.png (Thunderstorm with light rain - day icon)
 11n.png (Thunderstorm with light rain - night icon)
@@ -22,4 +37,6 @@ Based on the weather condition codes and the provided day and night icons, you w
 50n.png (Mist - night icon)
 04d.png (Overcast clouds - day icon)
 04n.png (Overcast clouds - night icon)
-Each weather condition has two icons, one for the day and another for the night. You can use these images to visually represent different weather conditions in your application. Make sure to name the images exactly as mentioned above so that the code can load the correct icons based on the weather condition codes from the API response.
+
+
+Ensure that the image names match the specified conventions to enable proper loading based on the weather condition codes received from the API response.
