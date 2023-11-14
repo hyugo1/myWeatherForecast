@@ -1,4 +1,4 @@
-This is a 5 day/3 hour weather forecast utilizing the OpenWeather API [Link Text](https://openweathermap.org)
+This is a 5 day/3 hour weather forecast utilizing the OpenWeather API [here](https://openweathermap.org)
 
 Key features include:
 ・Search cities/locations worldwide
