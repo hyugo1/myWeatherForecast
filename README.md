@@ -8,7 +8,7 @@ Key features include:
 <img src="weatherPic3.png" alt="Picture of the current weather details in Manchester" width="2000"/>
 
 - Additionally, the forecast covers a 5-day/3-hour span. Hovering over the panel provides detailed the forecast.
-<img src="weatherPic3.png" alt="5 day 3 hour forecast grid" width="2000"/>
+<img src="weatherPic1.png" alt="5 day 3 hour forecast grid" width="2000"/>
 
 
 
