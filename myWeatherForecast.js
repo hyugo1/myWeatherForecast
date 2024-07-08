@@ -142,21 +142,34 @@ function DefaultScreen() {
     setInterval(updateClock, 1000);
 }
 
-var d = new Date();
+const d = new Date();
 d.setHours(0, 0, 0, 0);
-var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const dateArray = [];
 
 function CheckDay(day) {
-if (day + d.getDay() > 6) {
-return day + d.getDay() - 7;
-} else {
-return day + d.getDay();
-}
+    if (day + d.getDay() > 6) {
+        return day + d.getDay() - 7;
+    } else {
+        return day + d.getDay();
+    }
 }
 
-for (i = 0; i < 5; i++) {
-document.getElementById("day" + (i + 1)).innerHTML = weekday[CheckDay(i)];
-}
+// for (i = 0; i < 5; i++) {
+//     document.getElementById("day" + (i + 1)).innerHTML = weekday[CheckDay(i)];
+// }
+for (let i = 0; i < 5; i++) {
+        const dayIndex = CheckDay(i);
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + i);
+        const date = currentDate.getDate();
+        const month = currentDate.getMonth() + 1;
+        const year = currentDate.getFullYear();
+        const dateString = `${weekday[dayIndex]}, ${month}/${date}/${year}`;
+        dateArray.push(dateString);
+        document.getElementById("day" + (i + 1)).innerHTML = weekday[dayIndex] + "<br>" + date;
+    }
+
 
 function showWeatherDetails(dayIndex) {
 const detailsElement = document.getElementById('details');
@@ -248,8 +261,8 @@ if (data && data.list) {
 
         const smallIcons = document.querySelectorAll('#weatherDetails .smallIcon');
         smallIcons.forEach(icon => {
-            icon.style.width = '50px';
-            icon.style.height = '50px';
+            icon.style.width = '60px';
+            icon.style.height = '60px';
         });
 
         const timeElements = document.querySelectorAll('#weatherDetails .time');
