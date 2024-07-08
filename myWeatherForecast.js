@@ -1,4 +1,5 @@
 // broken clouds mean they are very cloudy
+let lastHoveredDay = -1;
 
 const iconMappings = {
     "01d": { icon: "01d.png", description: "clear sky" },
@@ -171,6 +172,8 @@ function showWeatherDetails(dayIndex) {
 
     if (data && data.list) {
         if (detailsElement && detailsContainer) {
+            // Update the last hovered day index
+            lastHoveredDayIndex = dayIndex; 
             const dayDetails = data.list.filter((item) => {
                 const forecastDate = new Date(item.dt * 1000);
                 const forecastDayIndex = forecastDate.getDay();
@@ -225,8 +228,11 @@ function showWeatherDetails(dayIndex) {
 
 function hideWeatherDetails() {
     const detailsDiv = document.getElementById('weatherDetailsContainer');
-    if (detailsDiv) {
-        detailsDiv.classList.add('hide');
+    // if (detailsDiv) {
+    //     detailsDiv.classList.add('hide');
+    // }
+    if (lastHoveredDayIndex >= 0) {
+        showWeatherDetails(lastHoveredDayIndex); // Show the last hovered day's details
     }
 }
 
