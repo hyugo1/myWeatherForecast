@@ -11,30 +11,41 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&family=Ubuntu&display=swap" rel="stylesheet">
-
 </head>
 
 <body onload="DefaultScreen()">
     
-    <h1 id="theWebHeader">Weather Forecast</h1>
-    <p id="inputContainer">City: 
-        <input type="text" id="cityInput" placeholder="Search a City.."></p>
-    <div class="button-container">
-        <button type="button" onclick="GetInfo()" class="animated-button">
-            <span>Search...</span>
-        </button>
-    </div> 
-    <h2 id="cityName">---Sapporo---</h2>
+    <h1 id="webHeader">Weather Forecast</h1>
 
-    <div class="current-container">
-        <p id="currentTime">Time: Searching....</p>
-        <p id="currentTemperature">Current Temperature: Searching....</p>
-        <p id="feels_like">Feels like: Searching.....</p>       
-        <p id="humidity">Humidity: Searching....</p>
-        <p id="pressure">Pressure: Searching....</p>
-        <p id="windVelocity">Wind Speed: Searching....</p>
-        <p id="sunrise">Sunrise: Searching....</p>
-        <p id="sunset">Sunset: Searching....</p>
+    <div class="container">
+        <div leftside>
+        <p id="inputContainer">City: 
+            <input type="text" id="cityInput" placeholder="Search a City.."></p>
+        <div class="button-container">
+            <button type="button" onclick="GetInfo()" class="animated-button">
+                <span>Search...</span>
+            </button>
+        </div> 
+        <div class = "currentWeather">
+            <h2 id="cityName">---Tokyo---</h2>
+            <p id="currentTemperature">
+                <img id="weatherIcon" src="" alt="Weather Icon" style="display: none;">
+                <span class="small-text">Current Temperature:</span>
+                <span class="big-text" id="temperature">Searching....</span>
+            </p>
+        </div>
+        </div>
+        <div class="right-container">
+            <div class="current-container">
+                <p id="currentTime">Time: Searching....</p>
+                <p id="feels_like">Feels like: Searching.....</p>       
+                <p id="humidity">Humidity: Searching....</p>
+                <p id="pressure">Pressure: Searching....</p>
+                <p id="windVelocity">Wind Speed: Searching....</p>
+                <p id="sunrise">Sunrise: Searching....</p>
+                <p id="sunset">Sunset: Searching....</p>
+            </div>
+        </div>
     </div>
     
     <div id="todayWeatherContainer">
@@ -111,6 +122,9 @@
         <!-- </div> -->
     </div>
 
+    <div id="footer">
+        <p>Visit my website: <a href="https://www.hugosenzai.com">hugosenzai.com</a></p>
+    </div>
     <script src="myWeatherForecast.js"></script>
 
 </body>
