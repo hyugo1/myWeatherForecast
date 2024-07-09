@@ -12,9 +12,9 @@ body {
 }
 
 @keyframes backgroundChangeAnimation {
-  0% { background-color: #d0e8f9; }
-  50% { background-color: #bedffa; }
-  100% { background-color: #c4e4ff; }
+  0% { background-color: #ebf4fa; }
+  50% { background-color: #e8f2fa; }
+  100% { background-color: #e7f4ff; }
 }
 
 /* Header */
