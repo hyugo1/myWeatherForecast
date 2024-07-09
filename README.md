@@ -8,8 +8,8 @@ Key features include:
 <img src="myWeatherForecastGeneva.png" alt="Picture of the current weather details in Geneva" width="2000"/>
 
 - Additionally, the forecast covers a 5-day/3-hour span. Hovering over the different days provides detailed the forecast for that day.
-<img src="myweatherForecastTokyo.png" alt="5 day 3 hour forecast grid" width="2000"/>
-<img src="myweatherForecastTokyo2.png" alt="5 day 3 hour forecast grid" width="2000"/>
+<img src="myWeatherForecastTokyo.png" alt="5 day 3 hour forecast grid" width="2000"/>
+<img src="myWeatherForecastTokyo2.png" alt="5 day 3 hour forecast grid" width="2000"/>
 
 For effective representation of various weather conditions based on codes and day/night distinctions, you'll need a set of 22 distinct images. These images should correspond to different weather conditions:
 
