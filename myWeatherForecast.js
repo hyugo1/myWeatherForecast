@@ -1,4 +1,38 @@
+// Define weekdayNames and month names
+const weekdayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+/**
+ * Get formatted date string
+ * @param {number} dateUnix Unix date in seconds
+ * @param {number} timezone Timezone shift from UTC in seconds
+ * @returns {string} Date String. Format: "weekdayNames Day, Month"
+ */
+const getDate = function (dateUnix, timezone) {
+    const date = new Date((dateUnix + timezone) * 1000);
+    const weekDayName = weekdayNames[date.getUTCDay()];
+    const monthName = monthNames[date.getUTCMonth()];
+
+    return `${weekDayName}, ${date.getUTCDate()}, ${monthName}`;
+}
+
+/**
+ * @param {number} timeUnix Unix date in seconds
+ * @param {number} timezone Timezone shift from UTC in seconds
+ * @returns {string} Time string. Format: "HH:MM"
+ */
+const getTime = function (timeUnix, timezone) {
+    const date = new Date((timeUnix + timezone) * 1000);
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+}
+
 let lastHoveredDayIndex = -1;
+const d = new Date();
+d.setHours(0, 0, 0, 0);
+const dateArray = [];
 
 const iconMappings = {
     "01d": { icon: "01d.png", description: "clear sky" },
@@ -21,131 +55,165 @@ const iconMappings = {
     "50n": { icon: "50n.png", description: "mist at night" },
 };
 
-let data;
+let data; // Declare data globally
+let timezoneOffset = 0; // Declare the timezone offset globally
+let dailyForecasts = {}; // Object to store grouped forecasts by day
 
-function GetInfo() {
+function getWeather() {
     var newName = document.getElementById("cityInput");
     var cityName = document.getElementById("cityName");
     cityName.innerHTML = "--- " + newName.value + " ---";
 
     const city = newName.value;
+
+    if (!city) {
+        alert("Please enter a city name");
+        return;
+    }
+
     const apiKey = '56a53f4ecbc4ddd0c5b27f6a131d7700';
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
+    const currentWeatherURL = (`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`);
+    const forecastWeatherURL = (`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`);
+
+    fetch(currentWeatherURL)
         .then(response => response.json())
-        .then(currentData => {
-            const currentTemperature = currentData.main.temp.toFixed(1);
-            const weatherIconCode = currentData.weather[0].icon;
-            const iconMapping = iconMappings[weatherIconCode];
-            const weatherIconSrc = "weatherimages/" + (iconMapping ? iconMapping.icon : "default.png");
-
-            const temperatureElement = document.getElementById('temperature');
-            temperatureElement.textContent = `${currentTemperature} °C`;
-
-            const weatherIconElement = document.getElementById('weatherIcon');
-            weatherIconElement.src = weatherIconSrc;
-            weatherIconElement.alt = iconMapping ? iconMapping.description : 'Unknown';
-            weatherIconElement.style.display = 'inline';
-
-            // Now fetch the forecast data
-            return fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`);
+        .then(currentWeatherData => {
+            timezoneOffset = currentWeatherData.timezone; // Store the timezone offset
+            displayCurrentWeather(currentWeatherData);
+            updateClock(); // Update the clock immediately
         })
+        .catch(error => {
+            console.error("Error fetching current weather data:", error);
+            alert("Something Went Wrong :(");
+        });
+
+    fetch(forecastWeatherURL)
         .then(response => response.json())
-        .then(apiData => {
-            data = apiData;
-
-            // Getting the min and max values for each day
-            let minTemps = Array(5).fill(Number.MAX_VALUE);
-            let maxTemps = Array(5).fill(Number.MIN_VALUE);
-            let dailyData = Array(5).fill(null).map(() => []);
-
-            for (let i = 0; i < data.list.length; i++) {
-                let forecastDate = new Date(data.list[i].dt * 1000);
-                let dayIndex = (forecastDate.getDay() - d.getDay() + 5) % 5;
-
-                if (dayIndex >= 0 && dayIndex < 5) {
-                    let temperature = data.list[i].main.temp;
-                    minTemps[dayIndex] = Math.min(minTemps[dayIndex], temperature);
-                    maxTemps[dayIndex] = Math.max(maxTemps[dayIndex], temperature);
-                    dailyData[dayIndex].push(data.list[i]);
-                }
-            }
-
-            for (i = 0; i < 5; i++) {
-                document.getElementById("the" + (i + 1) + "Maximum").innerHTML = "Maximum: " + maxTemps[i].toFixed(1) + "°";
-                document.getElementById("the" + (i + 1) + "Minimum").innerHTML = "Minimum: " + minTemps[i].toFixed(1) + "°";
-            }
-
-            // Display additional weather data
-            const humidity = data.list[0].main.humidity;
-            const feels_like = data.list[0].main.feels_like;
-            const pressure = data.list[0].main.pressure;
-            const sunriseTimestamp = data.city.sunrise * 1000;
-            const sunsetTimestamp = data.city.sunset * 1000;
-            const sunriseTime = new Date(sunriseTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const sunsetTime = new Date(sunsetTimestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const wind_speed = data.list[0].wind.speed;
-
-            document.getElementById("humidity").innerHTML = "Humidity: " + humidity + "%";
-            document.getElementById("pressure").innerHTML = "Pressure: " + pressure + " hPa";
-            document.getElementById("feels_like").innerHTML = "Feels like: " + feels_like + " °C";
-            document.getElementById("windVelocity").innerHTML = "Wind Speed: " + wind_speed + " m/s";
-            document.getElementById("sunrise").innerHTML = "Sunrise: " + sunriseTime;
-            document.getElementById("sunset").innerHTML = "Sunset: " + sunsetTime;
-
-            // Update weather icons for the forecast
-            for (let i = 0; i < Math.min(data.list.length, 5); i++) {
-                let weatherIcon = document.getElementById("img" + (i + 1));
-                let weatherIconCode = data.list[i].weather[0].icon;
-
-                let iconMapping = iconMappings[weatherIconCode];
-                let weatherIconSrc = "weatherimages/" + (iconMapping ? iconMapping.icon : "default.png");
-
-                if (weatherIcon) {
-                    weatherIcon.src = weatherIconSrc;
-                }
-
-                // Update weather details for the day only if there are data points available
-                if (dailyData[i].length > 0) {
-                    let minTemp = Number.MAX_VALUE;
-                    let maxTemp = Number.MIN_VALUE;
-
-                    dailyData[i].forEach(item => {
-                        let temperature = item.main.temp;
-                        minTemp = Math.min(minTemp, temperature);
-                        maxTemp = Math.max(maxTemp, temperature);
-                    });
-
-                    document.getElementById("the" + (i + 1) + "Maximum").innerHTML = "Maximum: " + maxTemp.toFixed(1) + "°";
-                    document.getElementById("the" + (i + 1) + "Minimum").innerHTML = "Minimum: " + minTemp.toFixed(1) + "°";
-                }
-            }
+        .then(forecastWeatherData => {
+            data = forecastWeatherData; // Assign forecast data to the global variable
+            displayForecastWeather(forecastWeatherData);
         })
-        .catch(err => {
-            console.error("Error fetching weather data:", err);
+        .catch(error => {
+            console.error("Error fetching forecast data:", error);
             alert("Something Went Wrong :(");
         });
 }
 
+function displayCurrentWeather(data) {
+    if (!data || !data.weather) {
+        console.error("No current weather data available");
+        return;
+    }
+    const currentTemperature = data.main.temp.toFixed(1);
+    const weatherIconCode = data.weather[0].icon;
+                const iconMapping = iconMappings[weatherIconCode];
+                const weatherIconSrc = "weatherimages/" + (iconMapping ? iconMapping.icon : "default.png");
+
+    const temperatureElement = document.getElementById('temperature');
+    temperatureElement.textContent = `${currentTemperature} °C`;
+
+    const weatherIconElement = document.getElementById('weatherIcon');
+            weatherIconElement.src = weatherIconSrc;
+            weatherIconElement.alt = iconMapping ? iconMapping.description : 'Unknown';
+            weatherIconElement.style.display = 'inline';
+
+    const humidity = data.main.humidity;
+    const feels_like = data.main.feels_like;
+    const pressure = data.main.pressure;
+    const sunriseTimestamp = data.sys.sunrise;
+    const sunsetTimestamp = data.sys.sunset; 
+
+    const timezoneOffset = data.timezone;
+
+    const sunriseTime = getTime(sunriseTimestamp, timezoneOffset);
+    const sunsetTime = getTime(sunsetTimestamp, timezoneOffset);
+    const wind_speed = data.wind.speed;
+
+    console.log(`Sunrise: ${sunriseTime}`);
+    console.log(`Sunset: ${sunsetTime}`);
+
+    document.getElementById("humidity").innerHTML = "Humidity:  " + humidity + "%";
+    document.getElementById("pressure").innerHTML = "Pressure:  " + pressure + " hPa";
+    document.getElementById("feels_like").innerHTML = "Feels like:  " + feels_like + " °C";
+    document.getElementById("windVelocity").innerHTML = "Wind Speed:  " + wind_speed + " m/s";
+    document.getElementById("sunrise").innerHTML = "Sunrise:  " + sunriseTime;
+    document.getElementById("sunset").innerHTML = "Sunset:  " + sunsetTime;
+}
+
+function displayForecastWeather(data) {
+    if (!data || !data.list || data.list.length === 0) {
+        console.error("No weather data available");
+        return;
+    }
+
+    // Reset dailyForecasts
+    dailyForecasts = {};
+
+    // Group forecast data by day
+    for (let i = 0; i < data.list.length; i++) {
+        let forecastItem = data.list[i];
+        let forecastDate = new Date((forecastItem.dt + timezoneOffset) * 1000); // Adjust forecast time
+        let dayKey = forecastDate.toISOString().split('T')[0]; // Get YYYY-MM-DD format
+
+        if (!dailyForecasts[dayKey]) {
+            dailyForecasts[dayKey] = [];
+        }
+
+        dailyForecasts[dayKey].push(forecastItem);
+    }
+
+    // Getting the min and max values for each day
+    let minTemps = Array(5).fill(Number.MAX_VALUE);
+    let maxTemps = Array(5).fill(Number.MIN_VALUE);
+    let days = Object.keys(dailyForecasts).slice(0, 5);
+
+    for (let i = 0; i < days.length; i++) {
+        let day = days[i];
+        let dayData = dailyForecasts[day];
+
+        for (let j = 0; j < dayData.length; j++) {
+            let temperature = dayData[j].main.temp;
+            minTemps[i] = Math.min(minTemps[i], temperature);
+            maxTemps[i] = Math.max(maxTemps[i], temperature);
+        }
+    }
+
+    for (let i = 0; i < 5; i++) {
+        document.getElementById("the" + (i + 1) + "Maximum").innerHTML = "Max: " + maxTemps[i].toFixed(1) + "°";
+        document.getElementById("the" + (i + 1) + "Minimum").innerHTML = "Min: " + minTemps[i].toFixed(1) + "°";
+    }
+
+    // Update weather icons for the forecast
+    for (let i = 0; i < 5; i++) {
+        let day = days[i];
+        let weatherIcon = document.getElementById("img" + (i + 1));
+
+        if (dailyForecasts[day] && dailyForecasts[day][0]) {
+            let weatherIconCode = dailyForecasts[day][0].weather[0].icon;
+            let iconMapping = iconMappings[weatherIconCode];
+            let weatherIconSrc = "weatherimages/" + (iconMapping ? iconMapping.icon : "default.png");
+
+            if (weatherIcon) {
+                weatherIcon.src = weatherIconSrc;
+            }
+        }
+    }
+}
+
 function DefaultScreen() {
-    document.getElementById("cityInput").defaultValue = "Tokyo";
-    GetInfo();
-    updateClock();
+    document.getElementById("cityInput").defaultValue = "tokyo";
+    getWeather();
 
     const weatherWrapperDivs = document.getElementsByClassName('weather-wrapper');
     for (let i = 0; i < weatherWrapperDivs.length; i++) {
-        const dayIndex = CheckDay(i);
         const wrapperDiv = weatherWrapperDivs[i];
-        wrapperDiv.addEventListener('mouseover', () => showWeatherDetails(dayIndex));
+        wrapperDiv.addEventListener('mouseover', () => showWeatherDetails(i));
         wrapperDiv.addEventListener('mouseout', hideWeatherDetails);
     }
-    setInterval(updateClock, 1000);
-}
 
-const d = new Date();
-d.setHours(0, 0, 0, 0);
-const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const dateArray = [];
+    // setInterval(updateClock, 1000);
+}
 
 function CheckDay(day) {
     if (day + d.getDay() > 6) {
@@ -155,158 +223,110 @@ function CheckDay(day) {
     }
 }
 
-// for (i = 0; i < 5; i++) {
-//     document.getElementById("day" + (i + 1)).innerHTML = weekday[CheckDay(i)];
-// }
 for (let i = 0; i < 5; i++) {
-        const dayIndex = CheckDay(i);
-        const currentDate = new Date();
-        currentDate.setDate(currentDate.getDate() + i);
-        const date = currentDate.getDate();
-        const month = currentDate.getMonth() + 1;
-        const year = currentDate.getFullYear();
-        const dateString = `${weekday[dayIndex]}, ${month}/${date}/${year}`;
-        dateArray.push(dateString);
-        document.getElementById("day" + (i + 1)).innerHTML = weekday[dayIndex] + "<br>" + date;
-    }
-
+    const dayIndex = CheckDay(i);
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + i);
+const date = currentDate.getDate();
+const month = currentDate.getMonth() + 1;
+const year = currentDate.getFullYear();
+const dateString = `${weekdayNames[dayIndex]}, ${month}/${date}/${year}`;
+dateArray.push(dateString);
+document.getElementById("day" + (i + 1)).innerHTML = weekdayNames[dayIndex] + ", " + date;}
 
 function showWeatherDetails(dayIndex) {
-const detailsElement = document.getElementById('details');
-const detailsContainer = document.getElementById('weatherDetailsContainer');
-if (data && data.list) {
-    if (detailsElement && detailsContainer) {
-        // Update the last hovered day index
-        lastHoveredDayIndex = dayIndex;
-        const dayDetails = data.list.filter((item) => {
-            const forecastDate = new Date(item.dt * 1000);
-            const forecastDayIndex = forecastDate.getDay();
-            return dayIndex === forecastDayIndex;
-        });
-        let detailsHTML = '<ul class="sideways-list">';
+    const detailsElement = document.getElementById('details');
+    const detailsContainer = document.getElementById("weatherDetailsContainer");
 
-        dayDetails.forEach((item) => {
-            const forecastDate = new Date(item.dt * 1000);
-            const time = forecastDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const temp = item.main.temp.toFixed(1);
-            const weatherIconCode = item.weather[0].icon;
-            const iconMapping = iconMappings[weatherIconCode];
-            const weatherIconSrc = "weatherimages/" + (iconMapping ? iconMapping.icon : "default.png");
-            const weatherIconDescription = iconMapping ? iconMapping.description : "Unknown";
+    if (data && data.list) {
+        if (detailsElement && detailsContainer) {
+            // Update the last hovered day index
+            lastHoveredDayIndex = dayIndex;
+            // Get the specific date for the hovered day
+            const specificDate = new Date();
+            specificDate.setDate(specificDate.getDate() + dayIndex);
+            const dayKey = specificDate.toISOString().split('T')[0];
 
-            detailsHTML += `
-                <li>
-                    <span class="time">${time}</span>
-                    <span class="temperature">${temp}°C</span>
-                    <img src="${weatherIconSrc}" alt="${weatherIconDescription}" class="smallIcon">
-                    <span>${weatherIconDescription}</span>
-                </li>
-            `;
-        });
-        detailsHTML += '</ul>';
+            const dayDetails = dailyForecasts[dayKey] || [];
 
-        detailsElement.innerHTML = detailsHTML;
-        detailsContainer.classList.remove('hide');
+            let detailsHTML = '<ul class="sideways-list">';
 
-        const smallIcons = document.querySelectorAll('#weatherDetails .smallIcon');
-        smallIcons.forEach(icon => {
-            icon.style.width = '50px';
-            icon.style.height = '50px';
-        });
+            dayDetails.forEach((item) => {
+                const dateTimeUTC = item.dt;
+                const temp = item.main.temp.toFixed(1);
+                const weatherIconCode = item.weather[0].icon;
+                const iconMapping = iconMappings[weatherIconCode];
+                const weatherIconSrc = "weatherimages/" + (iconMapping ? iconMapping.icon : "default.png");
+                const weatherIconDescription = iconMapping ? iconMapping.description : "Unknown";
+                
+                // Get local time using your function
+                const localTime = getTime(dateTimeUTC, timezoneOffset);
+                
+                detailsHTML += `
+                    <li>
+                        <span class="time">${localTime}</span>
+                        <span class="temperature">${temp}°C</span>
+                        <img src="${weatherIconSrc}" alt="${weatherIconDescription}" class="smallIcon">
+                        <span>${weatherIconDescription}</span>
+                    </li>
+                `;
+            });
+            detailsHTML += '</ul>';
 
-        const timeElements = document.querySelectorAll('#weatherDetails .time');
-        const temperatureElements = document.querySelectorAll('#weatherDetails .temperature');
+            detailsElement.innerHTML = detailsHTML;
+            detailsContainer.classList.remove('hide');
 
-        timeElements.forEach(timeElement => {
-            timeElement.style.fontSize = '19px';
-        });
+            const smallIcons = document.querySelectorAll('#weatherDetails .smallIcon');
+            smallIcons.forEach(icon => {
+                icon.style.width = '50px';
+                icon.style.height = '50px';
+            });
 
-        temperatureElements.forEach(temperatureElement => {
-            temperatureElement.style.fontSize = '19px';
-        });
+            const timeElements = document.querySelectorAll('#weatherDetails .time');
+            const temperatureElements = document.querySelectorAll('#weatherDetails .temperature');
+
+            timeElements.forEach(timeElement => {
+                timeElement.style.fontSize = '19px';
+            });
+
+            temperatureElements.forEach(temperatureElement => {
+                temperatureElement.style.fontSize = '19px';
+            });
+        }
     }
-}if (data && data.list) {
-    if (detailsElement && detailsContainer) {
-        // Update the last hovered day index
-        lastHoveredDayIndex = dayIndex;
-        const dayDetails = data.list.filter((item) => {
-            const forecastDate = new Date(item.dt * 1000);
-            const forecastDayIndex = forecastDate.getDay();
-            return dayIndex === forecastDayIndex;
-        });
-        let detailsHTML = '<ul class="sideways-list">';
-
-        dayDetails.forEach((item) => {
-            const forecastDate = new Date(item.dt * 1000);
-            const time = forecastDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const temp = item.main.temp.toFixed(1);
-            const weatherIconCode = item.weather[0].icon;
-            const iconMapping = iconMappings[weatherIconCode];
-            const weatherIconSrc = "weatherimages/" + (iconMapping ? iconMapping.icon : "default.png");
-            const weatherIconDescription = iconMapping ? iconMapping.description : "Unknown";
-
-            detailsHTML += `
-                <li>
-                    <span class="time">${time}</span>
-                    <span class="temperature">${temp}°C</span>
-                    <img src="${weatherIconSrc}" alt="${weatherIconDescription}" class="smallIcon">
-                    <span>${weatherIconDescription}</span>
-                </li>
-            `;
-        });
-        detailsHTML += '</ul>';
-
-        detailsElement.innerHTML = detailsHTML;
-        detailsContainer.classList.remove('hide');
-
-        const smallIcons = document.querySelectorAll('#weatherDetails .smallIcon');
-        smallIcons.forEach(icon => {
-            icon.style.width = '60px';
-            icon.style.height = '60px';
-        });
-
-        const timeElements = document.querySelectorAll('#weatherDetails .time');
-        const temperatureElements = document.querySelectorAll('#weatherDetails .temperature');
-
-        timeElements.forEach(timeElement => {
-            timeElement.style.fontSize = '19px';
-        });
-
-        temperatureElements.forEach(temperatureElement => {
-            temperatureElement.style.fontSize = '19px';
-        });
-    }
-}}
+}
 
 function hideWeatherDetails() {
-    // const detailsContainer = document.getElementById('weatherDetailsContainer');
-    // detailsContainer.classList.add('hide');
-    const detailsDiv = document.getElementById('weatherDetailsContainer');
-    if (lastHoveredDayIndex >= 0) {
-        showWeatherDetails(lastHoveredDayIndex); // Show the last hovered day's details
-    } else {
-    detailsDiv.classList.add('hide');
-    }
+const detailsDiv = document.getElementById("weatherDetailsContainer");
+if (lastHoveredDayIndex >= 0) {
+    showWeatherDetails(lastHoveredDayIndex); // Show the last hovered day's details
+} else {
+detailsDiv.classList.add('hide');
+}
 }
 
 function updateClock() {
     const currentTime = new Date();
-    const clockElement = document.getElementById('currentTime');
-    const hours = currentTime.getHours().toString().padStart(2, '0');
-    const minutes = currentTime.getMinutes().toString().padStart(2, '0');
-    const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+    const localTime = currentTime.getTime();
+    const localOffset = currentTime.getTimezoneOffset() * 60000;
+    const utc = localTime + localOffset;
+    const cityTime = new Date(utc + (1000 * timezoneOffset));
+
+    const clockElement = document.getElementById("currentTime");
+    const hours = cityTime.getHours().toString().padStart(2, "0");
+    const minutes = cityTime.getMinutes().toString().padStart(2, "0");
+    const seconds = cityTime.getSeconds().toString().padStart(2, "0");
     clockElement.textContent = `Time: ${hours}:${minutes}:${seconds}`;
 }
+const searchInput = document.getElementById("cityInput");
+const searchButton = document.getElementById("searchButton");
 
-const searchInput = document.getElementById('cityInput');
-const searchButton = document.getElementById('searchButton');
+searchInput.addEventListener("keypress", function (event) {
+if (event.key === "Enter") {
+searchButton.click();
+}
+});
 
-searchInput.addEventListener('keypress', function (event) {
-    if (event.key === "Enter") {
-        searchButton.click();
-    }
-    });
-
-    document.addEventListener("DOMContentLoaded", function () {
-        DefaultScreen();
+document.addEventListener("DOMContentLoaded", function () {
+DefaultScreen();
 });

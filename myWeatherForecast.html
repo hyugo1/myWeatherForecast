@@ -7,22 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="myWeatherForecast.css">
     <title>5 Day Weather Forecast</title>
-    <link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&family=Ubuntu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 
-<body onload="DefaultScreen()">
+<!-- <body onload="DefaultScreen()"> -->
     
     <h1 id="webHeader">Weather Forecast</h1>
 
     <div class="container">
-        <div leftside>
+        <div>
         <p id="inputContainer">City: 
-            <input type="text" id="cityInput" placeholder="Search a City.."></p>
+            <input type="text" id="cityInput" placeholder="Search a city..."></p>
         <div class="button-container">
-            <button type="button" onclick="GetInfo()" class="animated-button">
+            <button type="button" onclick="getWeather()" class="animated-button">
                 <span>Search...</span>
             </button>
         </div> 
@@ -30,20 +31,20 @@
             <h2 id="cityName">---Tokyo---</h2>
             <p id="currentTemperature">
                 <img id="weatherIcon" src="" alt="Weather Icon" style="display: none;">
-                <span class="small-text">Current Temperature:</span>
-                <span class="big-text" id="temperature">Searching....</span>
+                <span class="currentTempWord"></span>
+                <span class="currentTempNumber" id="temperature">Searching....</span>
             </p>
         </div>
         </div>
         <div class="right-container">
             <div class="current-container">
-                <p id="currentTime">Time: Searching....</p>
-                <p id="feels_like">Feels like: Searching.....</p>       
-                <p id="humidity">Humidity: Searching....</p>
-                <p id="pressure">Pressure: Searching....</p>
-                <p id="windVelocity">Wind Speed: Searching....</p>
-                <p id="sunrise">Sunrise: Searching....</p>
-                <p id="sunset">Sunset: Searching....</p>
+                <p id="currentTime" class="weather-detail">Time: Searching....</p>
+                <p id="feels_like" class="weather-detail">Feels like: Searching.....</p>       
+                <p id="humidity" class="weather-detail">Humidity: Searching....</p>
+                <p id="pressure" class="weather-detail">Pressure: Searching....</p>
+                <p id="windVelocity" class="weather-detail">Wind Speed: Searching....</p>
+                <p id="sunrise" class="weather-detail">Sunrise: Searching....</p>
+                <p id="sunset" class="weather-detail">Sunset: Searching....</p>
             </div>
         </div>
     </div>
@@ -55,28 +56,10 @@
                 <img src="" class="imgClass" id="img1"></div>
             <p class="maxTempurture" id="the1Maximum">Searching....</p>
             <p class="minTempurture" id="the1Minimum">Searching....</p>
-            <!-- <div class="weatherData">
-                <div id="weatherDetails" class="hide">
-                    <p id="details"></p>
-                </div>
-            </div> -->
         </div>
     </div>
 
     <div id="weatherContainer">
-        <!-- <div id="todayWeatherContainer">
-            <div class="weather-wrapper" id="day1Weather">
-                <p class="weather-day" id="day1"></p>
-                <div class="image">
-                    <img src="" class="imgClass" id="img1"></div>
-                <p class="maxTempurture" id="the1Maximum">Searching....</p>
-                <p class="minTempurture" id="the1Minimum">Searching....</p>
-            </div>
-        </div> -->
-
-   
-
-
         <div id="forecastContainer">
             <div class="weather-wrapper" id="day2Weather">
                 <p class="weather-day" id="day2"></p>
@@ -128,7 +111,6 @@
         <p><a href="https://www.LinkedIn.com/in/hyugo-senzai">LinkedIn:</a></p>
     </div>
     <script src="myWeatherForecast.js"></script>
-
 </body>
 
 </html>
