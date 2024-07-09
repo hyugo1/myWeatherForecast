@@ -2,20 +2,14 @@ This is a 5 day/3 hour weather forecast utilizing the OpenWeather API [here.](ht
 
 Key features include:
 - Search cities/locations worldwide
-<img src="weatherPics1.png" alt="Picture of the current weather details in Tokyo" width="2000"/>
+<img src="myWeatherForecastAuckland.png" alt="Picture of the current weather details in Auckland" width="2000"/>
 
 - Ability to retrieve current weather details for various cities
-<img src="weatherpics2.png" alt="Picture of the current weather details in Manchester" width="2000"/>
+<img src="myWeatherForecastGeneva.png" alt="Picture of the current weather details in Geneva" width="2000"/>
 
-- Additionally, the forecast covers a 5-day/3-hour span. Hovering over the panel provides detailed the forecast for each day.
-<img src="weatherpics3.png" alt="5 day 3 hour forecast grid" width="2000"/>
-<img src="weatherpics4.png" alt="5 day 3 hour forecast grid" width="2000"/>
-
-
-
-
-
-
+- Additionally, the forecast covers a 5-day/3-hour span. Hovering over the different days provides detailed the forecast for that day.
+<img src="myweatherForecastTokyo.png" alt="5 day 3 hour forecast grid" width="2000"/>
+<img src="myweatherForecastTokyo2.png" alt="5 day 3 hour forecast grid" width="2000"/>
 
 For effective representation of various weather conditions based on codes and day/night distinctions, you'll need a set of 22 distinct images. These images should correspond to different weather conditions:
 
