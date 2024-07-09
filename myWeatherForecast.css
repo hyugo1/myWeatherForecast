@@ -27,7 +27,7 @@ body {
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: normal;
-  -webkit-text-stroke: 1.5px rgb(0, 0, 0);
+  -webkit-text-stroke: 2px rgb(0, 0, 0);
   animation: fadeIn 1s ease-in-out;
 }
 
@@ -60,7 +60,6 @@ body {
   margin: 0 auto;
   padding: 10px;
   border-radius: 25px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #2692ff;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
@@ -71,6 +70,7 @@ body {
   padding: 10px;
   margin-left: 6px;
   border: 1px solid #2692ff;
+  border-radius: 4px;
   outline: none;
   font-size: 16px;
   border-top-left-radius: 25px;
@@ -98,23 +98,26 @@ body {
   border: #2692ff 1px solid;
 }
 
+.currentWeather:hover {
+  background-color: #d3f3ff;
+}
+
 /* Slide-in animation for the current weather container */
 @keyframes slideIn {
   0% { transform: translateY(-20px); opacity: 0; }
   100% { transform: translateY(0); opacity: 1; }
 }
-.currentTempWord {
-  font-size: 35px;
-}
+
 .currentTempNumber {
-  font-size: 70px;
+  font-size: 60px;
   font-weight: bold;
-  padding-left: 30px;
+  padding-left: 20px;
+  -webkit-text-stroke: 1px #ffffff;
 }
 
 #currentTemperature img {
   width: 200px;
-  height: 200px;
+  height:200px;
   vertical-align: middle;
   animation: horizontalAnimation 8s infinite;
   margin-right: 1em;
@@ -128,38 +131,41 @@ body {
   75% { transform: translateX(-15px); }
 }
 
-
-
 #cityName {
   text-align: center;
   margin-top: 10px;
   color: black;
-  font-size: 3rem;
+  font-size: 4rem;
   font-family: "Lato", sans-serif;
   font-weight: 700;
   font-style: normal;
 }
 
 /* Current Weather Details */
-.current-container {
+.currentWeatherDetails-container {
   background-color: #f0f0f0;
   margin-bottom: 3rem;
   padding: 20px;
   border-radius: 4px;
   background-color: #e3f5fd;
   max-width: fit-content;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   border: #2692ff 1px solid;
   text-align: left;
   font-family: "Lato", sans-serif;
   font-size: 36px;
   font-weight: 700;
+  margin-top:20px;
 }
+
+.currentWeatherDetails-container:hover {
+  background-color: #d3f3ff;
+} 
 
 .weather-detail {
   font-size: 1.2em;
   margin: 10px 0;
-  color: #333;
+  -webkit-text-stroke: 1px #ffffff;
 }
 
 #currentTime,
@@ -170,10 +176,10 @@ body {
 #sunrise,
 #sunset {
   display: block;
-  -webkit-text-stroke: 0.4px rgb(0, 0, 0);
+  -webkit-text-stroke: 0.3px #e3f5fd;
 }
 
-#currentTime {
+/* #currentTime {
   color: #2e8ded;
 }
 
@@ -196,7 +202,7 @@ body {
 #sunrise,
 #sunset {
   color: #ff9800;
-}
+} */
 
 /* Weather Forecast */
 #todayWeatherContainer,
@@ -227,11 +233,11 @@ body {
   border-radius: 4px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
   background-color: #e3f5fd;
-  border: #2692ff 1px solid;
+  border: #00b3ff 1px solid;
 }
 
 .weather-wrapper:hover {
-  background-color: #f0f0f0;
+  background-color: #d3f3ff;
 }
 
 .weather-day {
@@ -271,9 +277,6 @@ body {
   cursor: pointer;
 }
 
-.weather-information:hover {
-  background-color: #f0f0f0;
-}
 
 .weather-information:hover {
   display: block;
@@ -284,6 +287,7 @@ body {
   font-weight: 700;
   text-align: center;
   padding: 5px 0;
+  -webkit-text-stroke: #e3f5fd;
 }
 
 .weatherData {
@@ -312,6 +316,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
+  margin: 20px 0 20px 0;
 }
 
 .animated-button {
@@ -415,6 +420,8 @@ body {
   background-color: #f0f4f8;
   padding: 10px;
   border: #2692ff 1px solid;
+  backdrop-filter: blur(10px);
+  border-radius: 4px;
   z-index: 1000;
 }
 
@@ -452,7 +459,52 @@ body {
   margin-bottom: 10px;
 }
 
-.time, .temperature {
-  font-size: 19px;
-  color: #1976d2;
+
+@media (max-width: 576px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .currentWeather {
+    max-width: 80%;
+  }
+
+  .currentWeatherDetails-container {
+    max-width: 80%;
+  }
+
+  #todayWeatherContainer,
+  #forecastContainer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .weather-wrapper {
+    width: 45%;
+    margin: 10px;
+  }
+
+  .weather-day {
+    font-size: 30px;
+  }
+
+  .currentTempNumber {
+    font-size: 50px;
+  }
+
+  .imgClass {
+    width: 80px;
+    height: 80px;
+  }
+
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .animated-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+  }
 }

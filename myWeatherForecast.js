@@ -35,24 +35,24 @@ d.setHours(0, 0, 0, 0);
 const dateArray = [];
 
 const iconMappings = {
-    "01d": { icon: "01d.png", description: "clear sky" },
-    "01n": { icon: "01n.png", description: "clear night" },
-    "02d": { icon: "02d.png", description: "few clouds" },
-    "02n": { icon: "02n.png", description: "few clouds at night" },
-    "03d": { icon: "03d.png", description: "scattered clouds" },
-    "03n": { icon: "03n.png", description: "scattered clouds at night" },
-    "04d": { icon: "04d.png", description: "very cloudy" },
-    "04n": { icon: "04n.png", description: "very cloudy at night" },
-    "09d": { icon: "09d.png", description: "shower rain" },
-    "09n": { icon: "09n.png", description: "shower rain at night" },
-    "10d": { icon: "10d.png", description: "rain" },
-    "10n": { icon: "10n.png", description: "rain at night" },
-    "11d": { icon: "11d.png", description: "thunderstorm" },
-    "11n": { icon: "11n.png", description: "thunderstorm at night" },
-    "13d": { icon: "13d.png", description: "snow" },
-    "13n": { icon: "13n.png", description: "snow at night" },
-    "50d": { icon: "50d.png", description: "mist" },
-    "50n": { icon: "50n.png", description: "mist at night" },
+    "01d": { icon: "01d.png", description: "Sunny" },
+    "01n": { icon: "01n.png", description: "Clear night" },
+    "02d": { icon: "02d.png", description: "Partly cloudy" },
+    "02n": { icon: "02n.png", description: "Partly cloudy (night)" },
+    "03d": { icon: "03d.png", description: "Scattered clouds" },
+    "03n": { icon: "03n.png", description: "Scattered clouds (night)" },
+    "04d": { icon: "04d.png", description: "Cloudy" },
+    "04n": { icon: "04n.png", description: "Cloudy (night)" },
+    "09d": { icon: "09d.png", description: "Drizzle" },
+    "09n": { icon: "09n.png", description: "Drizzle (night)" },
+    "10d": { icon: "10d.png", description: "Rain" },
+    "10n": { icon: "10n.png", description: "Rain (night)" },
+    "11d": { icon: "11d.png", description: "Thunderstorm" },
+    "11n": { icon: "11n.png", description: "Thunderstorm (night)" },
+    "13d": { icon: "13d.png", description: "Snow" },
+    "13n": { icon: "13n.png", description: "Snow (night)" },
+    "50d": { icon: "50d.png", description: "Mist" },
+    "50n": { icon: "50n.png", description: "Mist (night)" },
 };
 
 let data; // Declare data globally
@@ -212,7 +212,7 @@ function DefaultScreen() {
         wrapperDiv.addEventListener('mouseout', hideWeatherDetails);
     }
 
-    // setInterval(updateClock, 1000);
+    setInterval(updateClock, 1000);
 }
 
 function CheckDay(day) {
@@ -249,7 +249,7 @@ function showWeatherDetails(dayIndex) {
 
             const dayDetails = dailyForecasts[dayKey] || [];
 
-            let detailsHTML = '<ul class="sideways-list">';
+            let threeHourForecastHTML = '<ul class="sideways-list">';
 
             dayDetails.forEach((item) => {
                 const dateTimeUTC = item.dt;
@@ -262,7 +262,7 @@ function showWeatherDetails(dayIndex) {
                 // Get local time using your function
                 const localTime = getTime(dateTimeUTC, timezoneOffset);
                 
-                detailsHTML += `
+                threeHourForecastHTML += `
                     <li>
                         <span class="time">${localTime}</span>
                         <span class="temperature">${temp}°C</span>
@@ -271,9 +271,9 @@ function showWeatherDetails(dayIndex) {
                     </li>
                 `;
             });
-            detailsHTML += '</ul>';
+            threeHourForecastHTML += '</ul>';
 
-            detailsElement.innerHTML = detailsHTML;
+            detailsElement.innerHTML = threeHourForecastHTML;
             detailsContainer.classList.remove('hide');
 
             const smallIcons = document.querySelectorAll('#weatherDetails .smallIcon');
